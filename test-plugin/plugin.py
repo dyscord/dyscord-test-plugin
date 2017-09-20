@@ -9,3 +9,18 @@ class Plugin(DyscordPlugin):
     @command(pass_context=True)
     async def test_command(self, ctx):
         await ctx.channel.send("Test Command")
+
+    @command(pass_context=True)
+    async def store_test(self, ctx):
+        s = ctx.storage
+        try:
+            val = s['test']
+        except AttributeError:
+            val = 'None'
+        await ctx.channel.send("New val: " + str(val))
+
+    @command(pass_context=True)
+    async def set_store(self, ctx, val: str):
+        s = ctx.storage
+        s['test'] = val
+        await ctx.channel.send("Set to: " + str(val))
